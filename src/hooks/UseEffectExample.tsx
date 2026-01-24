@@ -1,73 +1,38 @@
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
+import { Button, Input } from "@mui/material";
 import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
-const UseEffectExample = () => {
+const UseEffectNewExample = () => {
 
-    // const [name, setName] = useState<string>('');
-    const [userDetails, setUserDetails] = useState<[]>([]);
+    const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     console.log('UseState Name value has been changed', name);
-    // }, [name])
+    const [name, setName] = useState<string>();
 
-    let isLoaded = false;
-
+    const currentlocation = useLocation();
+    console.log('Component loaded', currentlocation.pathname);
 
     useEffect(() => {
-        /*Mounting Starts*/
-        if (!isLoaded) {
-            const users = fetch('https://jsonplaceholder.typicode.com/users');
 
-            users.then(result => {
-                result.json().then(out => {
-                    setUserDetails(out);
-                })
-            })
-
-            console.log('Data Loaded');
-            isLoaded = true;
-        }
-        /*Mounting End*/
-
-        /*Unmounting Starts*/
         return () => {
-            console.log('Component unmounted');
+            console.log('Component unloaded');
         }
-        /*Unmounting End*/
-    }, [])
+    }, []);
+
+    const clickEvent = () => {
+        navigate('/effect');
+    }
 
     return (
         <>
-            {/* <TextField variant="outlined" label="Name" value={name} onChange={(e) => setName(e.target.value)} /> */}
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Name</TableCell>
-                            <TableCell>Email</TableCell>
-                            <TableCell>Phone</TableCell>
-                            <TableCell>Website</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {userDetails.map((row) => (
-                            <TableRow
-                                key={row['id']}
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                            >
-                                <TableCell component="th" scope="row">
-                                    {row['name']}
-                                </TableCell>
-                                <TableCell>{row['email']}</TableCell>
-                                <TableCell>{row['phone']}</TableCell>
-                                <TableCell>{row['website']}</TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+            <Input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+
+            <span>{name}</span>
+
+            {/* <Link to='/effect'> */}
+            <Button variant="outlined" onClick={clickEvent}>Click to navigate to useEffect Old</Button>
+            {/* </Link> */}
         </>
     )
 }
 
-export default UseEffectExample;
+export default UseEffectNewExample;
