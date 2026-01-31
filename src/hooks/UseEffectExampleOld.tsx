@@ -1,4 +1,5 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 const UseEffectExampleOld = () => {
@@ -16,13 +17,19 @@ const UseEffectExampleOld = () => {
     useEffect(() => {
         /*Mounting Starts*/
         if (!isLoaded) {
-            const users = fetch('https://jsonplaceholder.typicode.com/users');
+            const users = axios.get('https://jsonplaceholder.typicode.com/users');
 
-            users.then(result => {
-                result.json().then(out => {
-                    setUserDetails(out);
-                })
-            })
+            // const users = fetch('https://jsonplaceholder.typicode.com/users');
+
+            // users.then(result => {
+            //     result.json().then(out => {
+            //         setUserDetails(out);
+            //     })
+            // })
+
+            users.then(res => {
+                setUserDetails(res.data);
+            });
 
             console.log('Data Loaded');
             isLoaded = true;

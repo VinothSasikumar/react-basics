@@ -1,11 +1,29 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import Sample from './components/Sample';
-import UseEffectNewExample from './hooks/UseEffectExample';
-import UseEffectExampleOld from './hooks/UseEffectExampleOld';
+import ConditionalRendering from './components/ConditionalRendering';
+import UseRef from './hooks/UseRef';
+import { UserNameContext } from './hooks/UseContext';
 
 const App = () => {
   return (
     <>
+      <BrowserRouter>
+        <div className='w-full h-full bg-red-50'>
+          <header>
+            <nav className='p-2 flex gap-5'>
+              <Link to='/conditionalrendering' className='cursor-pointer hover:underline'>Conditional Rendering</Link>
+              <Link to='/useref' className='cursor-pointer hover:underline'>UseRef</Link>
+            </nav>
+          </header>
+
+          <UserNameContext.Provider value={'Vinoth'}>
+            <Routes>
+              <Route path='/conditionalrendering' element={<ConditionalRendering />} />
+              <Route path='/useref' element={<UseRef />} />
+            </Routes>
+          </UserNameContext.Provider>
+        </div>
+      </BrowserRouter>
+
       {/* <BrowserRouter>
         <Link to="/effect">For UseEffect</Link>
         <Link to="/sample">For Sample</Link>
@@ -15,14 +33,14 @@ const App = () => {
         </Routes>
       </BrowserRouter> */}
 
-      <BrowserRouter>
+      {/* <BrowserRouter>
         <Link to="/effectexample">For UseEffect</Link>
 
         <Routes>
           <Route path='/effectexample' element={<UseEffectNewExample />} />
           <Route path='/effect' element={<UseEffectExampleOld />} />
         </Routes>
-      </BrowserRouter>
+      </BrowserRouter> */}
     </>
   )
 };
