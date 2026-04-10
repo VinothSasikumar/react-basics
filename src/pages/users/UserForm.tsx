@@ -34,6 +34,7 @@ const UserForm = () => {
 
     const submitForm = async (data: UserDTO) => {
        const output =  await mutation.mutateAsync(data);
+       console.log(output)
     }
 
     return (
